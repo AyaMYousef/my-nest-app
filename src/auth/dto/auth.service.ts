@@ -4,6 +4,7 @@ import { ConflictException, Injectable } from "@nestjs/common";
 import { Model } from 'mongoose';
 import * as signupDto from "./signup.dto";
 import { hash } from 'src/common/utils/security/hash.utils';
+import { emailEvent } from 'src/common/utils/events/email.event';
 
 @Injectable()
 export class AuthService{
@@ -24,6 +25,7 @@ export class AuthService{
       email,
       password: hashedPassword,
     });
+    emailEvent.emit("confirmEmail",{to:email, otp:'232324',username})
         return {message: 'User Registered Successfully', user}
     }
 }
