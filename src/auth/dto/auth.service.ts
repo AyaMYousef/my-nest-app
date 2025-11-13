@@ -3,6 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { ConflictException, Injectable } from "@nestjs/common";
 import { Model } from 'mongoose';
 import * as signupDto from "./signup.dto";
+import { hash } from 'src/common/utils/security/hash.utils';
 
 @Injectable()
 export class AuthService{
@@ -15,9 +16,14 @@ export class AuthService{
         const checkUser = await this.UserModel.findOne({email});
         if(checkUser) throw new ConflictException('User Already Exist');
         
-        const user = await this.UserModel.create({username, email, password}) || [];
+         const hashedPassword = await hash({ plaintext: password });
 
-
+    
+    const user = await this.UserModel.create({
+      username,
+      email,
+      password: hashedPassword,
+    });
         return {message: 'User Registered Successfully', user}
     }
 }
