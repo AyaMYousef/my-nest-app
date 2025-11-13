@@ -18,3 +18,9 @@ export enum RoleEnum {
     ADMIN = 'ADMIN',
 
 }
+
+
+export enum EmailSubjectEnum{
+    confirmEmail = `Confirm Email`,
+    resetPassword = `Reset Password`
+}
