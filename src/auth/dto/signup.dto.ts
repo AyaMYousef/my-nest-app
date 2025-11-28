@@ -19,3 +19,24 @@ export const signupSchema = z.object({
 
 
 export type SignupDto = z.infer<typeof signupSchema>;
+
+
+export const resendOtpSchema = z.strictObject({
+  email: z.email(),
+});
+
+export type ResendDTO = z.infer<typeof resendOtpSchema>;
+
+export const confirmEmailSchema = z.strictObject({
+  email:z.email(),
+  otp: z.string().regex(/^\d{6}$/),
+});
+
+export type ConfirmEmailDTO = z.infer<typeof confirmEmailSchema>;
+
+export const loginSchema = z.strictObject({
+  email: z.email(),
+  password: z.string()
+});
+
+export type LoginDTO = z.infer<typeof loginSchema>;
